@@ -49,7 +49,7 @@ local V = {
 				end
 			end,
 		
-		MaxHealth =18000,
+		MaxHealth =11000,
 		
 		IsArmored = true,
 		
