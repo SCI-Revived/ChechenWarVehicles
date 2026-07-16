@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\bm1\det"
+	
+	"$alphatest" "1"
+}

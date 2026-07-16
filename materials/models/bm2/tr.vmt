@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\bm1\tr"
+	
+	"$alphatest" "1"
+}
