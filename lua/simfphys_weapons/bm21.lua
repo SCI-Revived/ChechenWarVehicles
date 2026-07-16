@@ -10,12 +10,12 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 5000
+		projectile.Damage = 1000
 		projectile.Force = 5000
 		projectile.Size = 10
 		projectile.DeflectAng = 1
 		projectile.BlastRadius = 300
-		projectile.BlastDamage = 5000
+		projectile.BlastDamage = 1000
 		projectile.MuzzleVelocity = 55
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
