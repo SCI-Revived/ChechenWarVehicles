@@ -66,13 +66,13 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 4000
-		projectile.Force = 8000
+		projectile.Damage = 1000
+		projectile.Force = 1000
 		projectile.Size = 2
 		projectile.DeflectAng = 1
-		projectile.BlastRadius = 300
-		projectile.BlastDamage = 3000
-		projectile.MuzzleVelocity = 1000
+		projectile.BlastRadius = 200
+		projectile.BlastDamage = 100
+		projectile.MuzzleVelocity = 125
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
 	AVX.FirePhysProjectile( projectile )

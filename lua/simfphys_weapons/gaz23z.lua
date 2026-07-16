@@ -10,11 +10,11 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 200
+		projectile.Damage = 50
 		projectile.Force = 50
 		projectile.Size = 3
 		projectile.BlastRadius = 50
-		projectile.BlastDamage = 50
+		projectile.BlastDamage = 25
 		projectile.DeflectAng = 40
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
 	
@@ -59,7 +59,7 @@ end
 
 function simfphys.weapon:AimWeapon( ply, vehicle, pod )	
 	local Aimang = pod:WorldToLocalAngles( ply:EyeAngles() )
-	local AimRate = 100
+	local AimRate = 70
 	
 	local Angles = vehicle:WorldToLocalAngles( Aimang ) - Angle(0,90,0)
 	
