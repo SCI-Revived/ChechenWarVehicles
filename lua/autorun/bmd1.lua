@@ -5,7 +5,7 @@ local V = {
 	Class = "gmod_sent_vehicle_fphysics_base",
 	Category = "SIMER Cold War",
 	SpawnOffset = Vector(0,0,60),
-	SpawnAngleOffset = -90,
+	SpawnAngleOffset = -180,
 
 	Members = {
 		Mass = 8000,
