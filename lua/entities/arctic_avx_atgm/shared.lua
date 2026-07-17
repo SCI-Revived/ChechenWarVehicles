@@ -29,6 +29,7 @@ function ENT:Initialize()
         phys:Wake()
         phys:SetBuoyancyRatio(0)
         phys:EnableGravity( false )
+        phys:EnableDrag( false )
     end
 
     self.MotorSound = CreateSound( self, "weapons/rpg/rocket1.wav")
