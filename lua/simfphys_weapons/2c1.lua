@@ -40,7 +40,7 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 70
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
-	AVX.FirePhysProjectile( projectile )
+	simfphys.FirePhysProjectile( projectile )
 end
 
 local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
