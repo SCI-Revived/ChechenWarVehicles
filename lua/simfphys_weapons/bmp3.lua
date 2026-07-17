@@ -46,6 +46,7 @@ vehicle:EmitSound("apc_fire")
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
+		projectile.Spread = Vector(0.01,0.01,0.01)
 		projectile.Damage = 150
 		projectile.Force = 50
 		projectile.Size = 3
