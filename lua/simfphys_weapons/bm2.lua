@@ -28,11 +28,11 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 500
+		projectile.Damage = 150
 		projectile.Force = 50
 		projectile.Size = 3
 		projectile.BlastRadius = 100
-		projectile.BlastDamage = 100
+		projectile.BlastDamage = 25
 		projectile.DeflectAng = 20
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
 	

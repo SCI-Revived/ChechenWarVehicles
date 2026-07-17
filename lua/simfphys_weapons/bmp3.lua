@@ -46,11 +46,11 @@ vehicle:EmitSound("apc_fire")
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 500
+		projectile.Damage = 150
 		projectile.Force = 50
 		projectile.Size = 3
 		projectile.BlastRadius = 100
-		projectile.BlastDamage = 100
+		projectile.BlastDamage = 25
 		projectile.DeflectAng = 20
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
 	
@@ -74,12 +74,12 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
-		projectile.Damage = 8000
+		projectile.Damage = 1500
 		projectile.Force = 6000
 		projectile.Size =5
 		projectile.DeflectAng = 10
 		projectile.BlastRadius = 300
-		projectile.BlastDamage = 500
+		projectile.BlastDamage = 100
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
 	simfphys.FirePhysProjectile( projectile )
