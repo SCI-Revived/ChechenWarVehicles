@@ -30,6 +30,8 @@ function ENT:Initialize()
         phys:SetBuoyancyRatio(0)
         phys:EnableGravity( false )
         phys:EnableDrag( false )
+        phys:SetDragCoefficient( 0 )
+        phys:SetAngleDragCoefficient( 0 )
     end
 
     self.MotorSound = CreateSound( self, "weapons/rpg/rocket1.wav")
