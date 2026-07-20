@@ -91,16 +91,6 @@ function ENT:Think()
 
         self.Ticks = self.Ticks + 1
     end
-
-    if SERVER then
-        local Fwd = self:GetForward()
-        local Speed = self:GetVelocity():Length()
-        local SPEED_TO_REACH = 3000
-        local MUL = 0.79
-        Fwd:Mul(math.max(SPEED_TO_REACH - Speed, 0) * MUL)
-        local PhysObj = self:GetPhysicsObject()
-        PhysObj:ApplyForceCenter(Fwd)
-    end
 end
 
 function ENT:Detonate()
