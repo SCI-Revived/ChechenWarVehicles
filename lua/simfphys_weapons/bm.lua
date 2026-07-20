@@ -379,7 +379,7 @@ function simfphys.weapon:Think( vehicle )
 			local phys = missile:GetPhysicsObject()
 
 			phys:SetVelocity( vel )
-			missile:SetAngles( missile.DirVector:Angle() )
+			missile:SetMissileRenderAngles(missile.DirVector:Angle())
 		else
 			table.insert(remove, i)
 		end

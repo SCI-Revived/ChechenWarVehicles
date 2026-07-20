@@ -38,6 +38,10 @@ if SERVER then
     end
 end
 
+function ENT:SetupDataTables()
+    self:NetworkVar("Angle", "MissileRenderAngles")
+end
+
 local images_muzzle = {"effects/muzzleflash1", "effects/muzzleflash2", "effects/muzzleflash3", "effects/muzzleflash4"}
 local function TableRandomChoice(tbl)
     return tbl[math.random(#tbl)]
@@ -45,6 +49,7 @@ end
 
 function ENT:Think()
     if CLIENT then
+        self:SetRenderAngles(self:GetMissileRenderAngles())
         if self.Ticks % 5 == 0 then
             local emitter = ParticleEmitter(self:GetPos())
             if not self:IsValid() or self:WaterLevel() > 2 then return end
