@@ -51,7 +51,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.DeflectAng = 1
 		projectile.BlastRadius = 500
 		projectile.BlastDamage = 1000
-		projectile.MuzzleVelocity = 65
+		projectile.MuzzleVelocity = 35
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
 	simfphys.FirePhysProjectile( projectile )
