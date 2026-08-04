@@ -24,7 +24,7 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.shootDirection = shootDirection
 		projectile.attacker = ply
 		projectile.Tracer	= 1
-		projectile.HullSize = 5
+		projectile.HullSize = 8
 		projectile.attackingent = vehicle
 		projectile.Spread = Vector(0.008,0.008,0.008)
 		projectile.Damage = 50

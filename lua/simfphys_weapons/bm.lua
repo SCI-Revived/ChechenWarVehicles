@@ -68,7 +68,7 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 1000
 		projectile.Force = 1000
-		projectile.Size = 2
+		projectile.Size = 5
 		projectile.DeflectAng = 1
 		projectile.BlastRadius = 200
 		projectile.BlastDamage = 100
