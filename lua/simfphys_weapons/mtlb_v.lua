@@ -12,7 +12,7 @@ for i = 1,8 do
 	}
 end
 
-local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
+local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 	vehicle:EmitSound("tiger_fire_mg")
 	
 	local projectile = {}
