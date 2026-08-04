@@ -1,4 +1,4 @@
-local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
+local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 
 	vehicle:EmitSound("weapons/Ural2.wav")
 	

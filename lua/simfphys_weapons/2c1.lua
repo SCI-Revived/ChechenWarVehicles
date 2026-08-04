@@ -15,7 +15,7 @@ end
 
 simfphys.weapon.M240Clipsize = 200
 
-local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
+local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
     vehicle:EmitSound("t90ms_fire")
 	vehicle:EmitSound("t90ms_reload")
 
