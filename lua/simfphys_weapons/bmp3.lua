@@ -47,11 +47,11 @@ vehicle:EmitSound("apc_fire")
 		projectile.attacker = ply
 		projectile.attackingent = vehicle
 		projectile.Spread = Vector(0.01,0.01,0.01)
-		projectile.Damage = 150
+		projectile.Damage = 30
 		projectile.Force = 50
 		projectile.Size = 3
-		projectile.BlastRadius = 100
-		projectile.BlastDamage = 25
+		projectile.BlastRadius = 200
+		projectile.BlastDamage = 5
 		projectile.DeflectAng = 20
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
 	
