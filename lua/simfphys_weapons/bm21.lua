@@ -2,8 +2,16 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 
 	vehicle:EmitSound("weapons/Ural2.wav")
 	
-	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 20000, shootOrigin ) 
-	
+	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 20000, shootOrigin )
+
+	-- If this is going to be used to barrage bases, it should have some spread.
+	local spread = 0.05   -- higher = wider cone (roughly a few degrees)
+	shootDirection = (shootDirection + Vector(
+		math.Rand( -spread, spread ),
+		math.Rand( -spread, spread ),
+		math.Rand( -spread, spread )
+	)):GetNormalized()
+
 	local projectile = {}
 		projectile.filter = vehicle.VehicleData["filter"]
 		projectile.shootOrigin = shootOrigin
@@ -15,7 +23,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.Size = 10
 		projectile.DeflectAng = 1
 		projectile.BlastRadius = 300
-		projectile.BlastDamage = 1000
+		projectile.BlastDamage = 500
 		projectile.MuzzleVelocity = 60
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
@@ -190,5 +198,5 @@ function simfphys.weapon:PrimaryAttack( vehicle, ply )
 	
 	self:TakePrimaryAmmo( vehicle )
 	
-	self:SetNextPrimaryFire( vehicle, CurTime() + 0.50 )
+	self:SetNextPrimaryFire( vehicle, CurTime() + 0.25 )
 end

@@ -101,6 +101,7 @@ function ENT:Detonate()
     util.BlastDamage(self, attacker, self:GetPos(), 256, 40)
     self:FireBullets({
         Attacker = attacker,
+        Inflictor = self, -- lets CWV_PropDamage scale this hit when it lands on a prop
         Damage = 3000,
         Tracer = 0,
         Distance = 64,

@@ -43,6 +43,11 @@ local function atgm_fire(ply,vehicle,shootOrigin,shootDirection)
 	vehicle.missile:Activate()
 	vehicle.missile.DirVector = shootDirection
 
+	-- prop-damage scaling (Simple Prop Damage); tune via CWV_PropDamage.Multipliers.bm1
+	if CWV_PropDamage then
+		vehicle.missile.SPD_PropDamageMultiplier = CWV_PropDamage.Resolve( vehicle )
+	end
+
 	vehicle.missile:SetVelocity(shootDirection * 2500)
 
 	vehicle.MissileTracking = vehicle.MissileTracking or {}
