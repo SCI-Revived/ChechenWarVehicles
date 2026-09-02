@@ -26,6 +26,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
+		projectile.CWV_PropDamageMultiplier = 1 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
 	simfphys.FireHitScan( projectile )
 end
 
@@ -45,6 +46,9 @@ local function atgm_fire(ply,vehicle,shootOrigin,shootDirection)
 
 
 	vehicle.missile:SetVelocity(shootDirection * 2500)
+
+	-- vs props: 1 = unchanged, 0 = cannot hurt props, 0.1 = 10%. See cwv_prop_damage.lua
+	vehicle.missile.CWV_PropDamageMultiplier = 1
 
 	vehicle.MissileTracking = vehicle.MissileTracking or {}
 
@@ -75,7 +79,8 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 100
 		projectile.MuzzleVelocity = 125
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 1 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+
 	simfphys.FirePhysProjectile( projectile )
 end
 

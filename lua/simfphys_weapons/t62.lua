@@ -29,7 +29,8 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.Spread = Vector(0.008,0.008,0.008)
 		projectile.Damage = 50
 		projectile.Force = 12
-	
+		projectile.CWV_PropDamageMultiplier = 1 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+
 	simfphys.FireHitScan( projectile )
 end
 
@@ -47,7 +48,8 @@ vehicle:EmitSound("sherman_fire_mg")
 		projectile.Spread = Vector(0.008,0.008,0.008)
 		projectile.Damage = 35
 		projectile.Force = 12
-	
+		projectile.CWV_PropDamageMultiplier = 1 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+
 	simfphys.FireHitScan( projectile )
 end
 
@@ -75,7 +77,8 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastRadius = 300
 		projectile.BlastDamage = 500
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 0 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+
 	simfphys.FirePhysProjectile( projectile )
 
 end
@@ -100,7 +103,8 @@ local function atgm_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 50
 		projectile.DeflectAng = 1
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 1 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+
 	simfphys.FirePhysProjectile( projectile )
 end
 

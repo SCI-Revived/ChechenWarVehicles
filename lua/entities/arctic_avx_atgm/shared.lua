@@ -98,6 +98,16 @@ function ENT:Detonate()
 
     local attacker = self
     if self.Owner:IsValid() then attacker = self.Owner end
+
+    -- Chechen War Vehicles prop-damage multiplier. Set self.CWV_PropDamageMultiplier
+    -- (or CWV_PropDamage.SetPropDamageMultiplier) when spawning this missile.
+    -- See lua/autorun/server/cwv_prop_damage.lua. 1 / nil = unchanged.
+    local cwvPrev
+    local cwvMult = self.CWV_PropDamageMultiplier
+    if CWV_PropDamage and isnumber( cwvMult ) then
+        cwvPrev = CWV_PropDamage.OpenWindow( cwvMult )
+    end
+
     util.BlastDamage(self, attacker, self:GetPos(), 256, 40)
     self:FireBullets({
         Attacker = attacker,
@@ -112,6 +122,10 @@ function ENT:Detonate()
             dmg:SetDamageType(DMG_BLAST)
         end
     })
+
+    if CWV_PropDamage and isnumber( cwvMult ) then
+        CWV_PropDamage.CloseWindow( cwvPrev )
+    end
 
     self:Remove()
 end
