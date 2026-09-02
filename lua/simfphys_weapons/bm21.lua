@@ -138,7 +138,7 @@ function simfphys.weapon:ReloadPrimary( vehicle )
 	
 	vehicle:EmitSound("simulated_vehicles/weapons/tiger_reload.wav")
 	
-	self:SetNextPrimaryFire( vehicle, CurTime() + 15 )
+	self:SetNextPrimaryFire( vehicle, CurTime() + 20 )
 	
 	vehicle:SetNWString( "WeaponMode", tostring( vehicle.CurMag ) )
 	
