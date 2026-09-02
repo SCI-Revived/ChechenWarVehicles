@@ -26,6 +26,7 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -54,6 +55,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 50
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -71,6 +73,7 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -188,7 +191,7 @@ function simfphys.weapon:ControlTurret( vehicle, deltapos )
 	
 	local fire = ply:KeyDown( IN_ATTACK )
 	
-		--перезарядка орудия---
+		--Ð¿ÐµÑ€ÐµÐ·Ð°Ñ€ÑÐ´ÐºÐ° Ð¾Ñ€ÑƒÐ´Ð¸Ñ---
 	local change =ply:KeyDown( IN_RELOAD)
 	vehicle.FireMode = vehicle.FireMode or 0
 			if vehicle.FireMode >= 2 then
@@ -399,7 +402,7 @@ function simfphys.weapon:TertiaryAttack( vehicle, ply, shootOrigin, Attachment, 
 	local shootDirection = Attachment.Ang:Forward()
 	vehicle:PlayAnimation( "fire" )	
 	mg_fire( ply, vehicle, shootOrigin, Attachment.Ang:Forward() )
-	--дым после выстрела
+	--Ð´Ñ‹Ð¼ Ð¿Ð¾ÑÐ»Ðµ Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ»Ð°
 	local effectdata = EffectData()
 		effectdata:SetEntity( vehicle )
 	util.Effect( "", effectdata, true, true )

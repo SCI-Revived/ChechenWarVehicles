@@ -30,6 +30,7 @@ vehicle:EmitSound("sherman_fire_mg")
 		projectile.Damage = 60
 		projectile.Force = 12
 	
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -48,6 +49,7 @@ vehicle:EmitSound("sherman_fire_mg")
 		projectile.Damage = 35
 		projectile.Force = 12
 	
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -75,6 +77,7 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 500
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
+	projectile.SPD_PropDamageMultiplier = 0.51 -- 2550 damage, 25,500 damage per minute vs props.
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -462,7 +465,7 @@ function simfphys.weapon:Think( vehicle )
     elseif vehicle:EngineActive() and gear == 2 and vehicle.PressedKeys["D"] == false and vehicle.susOnGround == false then
 		trackss:Stop()
 	end	
-		---проверка на воду
+		---Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð²Ð¾Ð´Ñƒ
 	if vehicle:WaterLevel()==3 then
 	vehicle:StopEngine()
 	end

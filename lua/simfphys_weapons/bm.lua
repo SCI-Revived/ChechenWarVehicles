@@ -26,6 +26,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -43,10 +44,7 @@ local function atgm_fire(ply,vehicle,shootOrigin,shootDirection)
 	vehicle.missile:Activate()
 	vehicle.missile.DirVector = shootDirection
 
-	-- prop-damage scaling (Simple Prop Damage); tune via CWV_PropDamage.Multipliers.bm1
-	if CWV_PropDamage then
-		vehicle.missile.CWV_PropDamageMultiplier = CWV_PropDamage.Resolve( vehicle )
-	end
+	CWV_SetPropDamageMultiplier( vehicle.missile, 1 ) -- prop damage: 1 = full, 0.1 = 10%, 0 = none
 
 	vehicle.missile:SetVelocity(shootDirection * 2500)
 
@@ -80,6 +78,7 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 125
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
+	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -394,7 +393,7 @@ function simfphys.weapon:Think( vehicle )
 		table.remove(vehicle.MissileTracking, i)
 	end
 	
-		--проверка на потопление
+		--Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð¿Ð¾Ñ‚Ð¾Ð¿Ð»ÐµÐ½Ð¸Ðµ
 	if vehicle:WaterLevel()==1 then
 	--vehicle:StopEngine()
 	--local o=vehicle:GetPhysicsObject()
