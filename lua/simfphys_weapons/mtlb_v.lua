@@ -37,8 +37,16 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		effectdata:SetEntity( vehicle )
 	util.Effect( "simfphys_leopard_muzzle", effectdata )
 	
-	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 200000, shootOrigin ) 
-	
+	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 200000, shootOrigin )
+
+	-- If this is going to be used to barrage bases, it should have some spread.
+	local spread = 0.025   -- higher = wider cone (roughly a few degrees)
+	shootDirection = (shootDirection + Vector(
+		math.Rand( -spread, spread ),
+		math.Rand( -spread, spread ),
+		math.Rand( -spread, spread )
+	)):GetNormalized()
+
 	 local projectile = {}
 		projectile.filter = vehicle.VehicleData["filter"]
 		projectile.shootOrigin = shootOrigin
