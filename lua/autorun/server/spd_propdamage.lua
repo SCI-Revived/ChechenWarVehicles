@@ -57,18 +57,18 @@ CWV_PropDamage = CWV_PropDamage or {}
 CWV_PropDamage.Default = 0.15
 
 CWV_PropDamage.Multipliers = CWV_PropDamage.Multipliers or {
-	t62   = 0.57142857142,  -- T-62, about 2285 prop damage per shot.
-	t80   = 0.666,  -- T-80U, about 3333 prop damage per shot.
-	t72b  = 0.614,  -- T-72B, about 2763 prop damage per shot
+	t62   = 0.57142857142,  -- T-62, about 2000 prop damage per shot.
+	t80   = 0.666,  -- T-80U, about 3000 prop damage per shot.
+	t72b  = 0.614,  -- T-72B, about 2450 prop damage per shot
 	bm2   = 0.2,  -- BMD-2, it's an autocannon, it's barely damaging anything.
-	bm3   = 0.20,  -- BMP-3, 
-	bm1   = 0.20,  -- BMP-1 (bm.lua)
-	c21   = 0.10,  -- 2S1 Gvozdika
+	bm3   = 0.20,  -- BMP-3, about 300 prop damage on the 100mm gun
+	bm1   = 0.20,  -- BMP-1 (bm.lua), about 200 prop damage per shot
+	c21   = 1,  -- 2S1 Gvozdika, for long range sieges.
 	bm21  = 0.27,  -- BM-21 Grad, 405 prop damage PER rocket.
-	["232"] = 1, -- 2S3 Akatsiya, full damage, you should use this to siege bases from range.
+	["232"] = 0, -- ZU-23-2, the chip damage would be really annoying, so no.
 	mt1   = 0.6,  -- MT-LB (mtlb_v.lua)
 	mt2   = 0.0,  -- MT-LB variant (mtlb.lua)
-	gaz66 = 0.1,  -- GAZ-66 (ZU-23 truck)
+	gaz66 = 0,  -- GAZ-66 (ZU-23 truck)
 }
 
 --------------------------------------------------------------------------------
