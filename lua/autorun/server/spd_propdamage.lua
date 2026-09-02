@@ -81,6 +81,9 @@ local cv_enabled = CreateConVar( "cwv_spd_propdamage_enabled", "1", FCVAR_ARCHIV
 local cv_mult = CreateConVar( "cwv_spd_propdamage_mult", "1", FCVAR_ARCHIVE,
 	"Global multiplier stacked on top of every per-vehicle prop-damage multiplier. 1 = unchanged." )
 
+local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "0", FCVAR_ARCHIVE,
+	"Print every prop hit this layer sees, and the multiplier it resolved." )
+
 --------------------------------------------------------------------------------
 -- Public API
 --------------------------------------------------------------------------------
@@ -130,21 +133,32 @@ local DMG_WEAPONISH = bit.bor( DMG_BULLET, DMG_BLAST, DMG_AIRBOAT, DMG_BUCKSHOT,
 hook.Add( "SPD_PreEntityTakeDamage", "CWV_SPD_PropDamage", function( propEnt, propTable, dmg )
 	if not cv_enabled:GetBool() then return end
 
-	local mult
+	local mult, src
+
+	local inflictor = dmg:GetInflictor()
+	local attacker  = dmg:GetAttacker()
 
 	if pendingHitScan and pendingHitScan.f == FrameNumber() then
-		mult = pendingHitScan.m
-	else
-		local inflictor = dmg:GetInflictor()
-		if IsValid( inflictor ) and isnumber( inflictor.SPD_PropDamageMultiplier ) then
-			mult = inflictor.SPD_PropDamageMultiplier
-		else
-			local attacker = dmg:GetAttacker()
-			if IsValid( attacker ) and isnumber( attacker.SPD_PropDamageMultiplier )
-				and dmg:IsDamageType( DMG_WEAPONISH ) then
-				mult = attacker.SPD_PropDamageMultiplier
-			end
-		end
+		mult, src = pendingHitScan.m, "hitscan"
+	elseif IsValid( inflictor ) and isnumber( inflictor.SPD_PropDamageMultiplier ) then
+		-- shell tagged at creation, or a tagged missile / vehicle
+		mult, src = inflictor.SPD_PropDamageMultiplier, "inflictor"
+	elseif IsValid( inflictor ) and inflictor:GetClass() == "simfphys_tankprojectile"
+		and IsValid( inflictor:GetOwner() ) and isnumber( inflictor:GetOwner().SPD_PropDamageMultiplier ) then
+		-- shell we could not tag at creation: fall back to its owning vehicle
+		mult, src = inflictor:GetOwner().SPD_PropDamageMultiplier, "shell-owner"
+	elseif IsValid( attacker ) and isnumber( attacker.SPD_PropDamageMultiplier )
+		and dmg:IsDamageType( DMG_WEAPONISH ) then
+		mult, src = attacker.SPD_PropDamageMultiplier, "attacker"
+	end
+
+	if cv_debug:GetBool() then
+		MsgN( string.format(
+			"[CWV SPD] hit %s  dmg %.0f  infl %s  attacker %s  ->  mult %s (%s)",
+			tostring( propEnt ), dmg:GetDamage(),
+			tostring( IsValid( inflictor ) and inflictor:GetClass() or inflictor ),
+			tostring( IsValid( attacker ) and attacker:GetClass() or attacker ),
+			tostring( mult ), tostring( src ) ) )
 	end
 
 	if mult == nil then return end
