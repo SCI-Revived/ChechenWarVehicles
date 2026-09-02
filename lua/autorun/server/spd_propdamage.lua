@@ -81,7 +81,7 @@ local cv_enabled = CreateConVar( "cwv_spd_propdamage_enabled", "1", FCVAR_ARCHIV
 local cv_mult = CreateConVar( "cwv_spd_propdamage_mult", "1", FCVAR_ARCHIVE,
 	"Global multiplier stacked on top of every per-vehicle prop-damage multiplier. 1 = unchanged." )
 
-local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "0", FCVAR_ARCHIVE,
+local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "1", FCVAR_ARCHIVE,
 	"Print every prop hit this layer sees, and the multiplier it resolved." )
 
 --------------------------------------------------------------------------------
