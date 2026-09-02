@@ -40,7 +40,6 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 70
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -59,7 +58,6 @@ vehicle:EmitSound("sherman_fire_mg")
 		projectile.Damage = 35
 		projectile.Force = 12
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -80,7 +78,6 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.DeflectAng = 40
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 	
 
@@ -107,7 +104,6 @@ local function atgm_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.DeflectAng = 1
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 

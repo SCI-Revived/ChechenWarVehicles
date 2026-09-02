@@ -26,7 +26,6 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -55,7 +54,6 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 65
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -73,7 +71,6 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 20
 		projectile.Force = 12
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FireHitScan( projectile )
 end
 
@@ -102,7 +99,6 @@ local function Hcannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.MuzzleVelocity = 48
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
 	
-	projectile.SPD_PropDamageMultiplier = 1 -- prop damage vs Simple Prop Damage: 1 = full, 0.1 = 10%, 0 = none
 	simfphys.FirePhysProjectile( projectile )
 end
 
