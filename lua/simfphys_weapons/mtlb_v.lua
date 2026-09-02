@@ -40,7 +40,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 200000, shootOrigin )
 
 	-- If this is going to be used to barrage bases, it should have some spread.
-	local spread = 0.1   -- higher = wider cone (roughly a few degrees)
+	local spread = 0.05   -- higher = wider cone (roughly a few degrees)
 	shootDirection = (shootDirection + Vector(
 		math.Rand( -spread, spread ),
 		math.Rand( -spread, spread ),
@@ -413,7 +413,7 @@ function simfphys.weapon:TertiaryAttack( vehicle, ply, shootOrigin, Attachment, 
 	util.Effect( "", effectdata, true, true )
 	relouds=relouds+1
 	if relouds<4 then
-	self:SetNextPrimaryFire( vehicle, CurTime() + 0.2)
+	self:SetNextPrimaryFire( vehicle, CurTime() + 0.25)
 	else
 		vehicle:EmitSound("tiger_reload")
 		relouds=0
