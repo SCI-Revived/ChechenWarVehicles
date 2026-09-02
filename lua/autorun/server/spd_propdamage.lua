@@ -23,6 +23,14 @@
 	1  = unchanged, 0 = this vehicle cannot hurt props at all,
 	>1 = hits props harder than it hits vehicles.
 
+	NOTE ON THE TAG FIELD
+	---------------------
+	Shells / vehicles are tagged with `ent.CWV_PropDamageMultiplier`, NOT
+	`ent.SPD_PropDamageMultiplier`. Simple Prop Damage's LVS compatibility layer
+	also hooks SPD_PreEntityTakeDamage and blindly scales by any inflictor's
+	`SPD_PropDamageMultiplier`, so sharing that field name makes both layers fire
+	and the multiplier gets applied twice (squared).
+
 	HOW TO TUNE  (this is the whole point - every vehicle individually)
 	-----------------------------------------------------------------
 	Edit the CWV_PropDamage.Multipliers table below. The key is the vehicle's
@@ -33,10 +41,11 @@
 	Live, without a map change:
 		cwv_spd_propdamage_enabled 1      -- master toggle
 		cwv_spd_propdamage_mult    1      -- global multiplier stacked on top
+		cwv_spd_propdamage_debug   0      -- print every prop hit + resolved mult
 		lua_run CWV_PropDamage.Multipliers.t62 = 0.05
 
 	Per-weapon override (optional, finer than per-vehicle): set
-		projectile.SPD_PropDamageMultiplier = <n>
+		projectile.CWV_PropDamageMultiplier = <n>
 	on the projectile table in that weapon's fire function in
 	lua/simfphys_weapons/<name>.lua, before the simfphys.Fire* call. When set it
 	replaces the per-vehicle number for that one weapon.
@@ -49,6 +58,8 @@
 if not SERVER then return end
 
 CWV_PropDamage = CWV_PropDamage or {}
+
+local TAG = "CWV_PropDamageMultiplier" -- entity field we stamp; deliberately NOT SPD_PropDamageMultiplier
 
 --------------------------------------------------------------------------------
 -- TUNING TABLE  -  key = simfphys spawn-list name, value = prop-damage multiplier
@@ -81,7 +92,7 @@ local cv_enabled = CreateConVar( "cwv_spd_propdamage_enabled", "1", FCVAR_ARCHIV
 local cv_mult = CreateConVar( "cwv_spd_propdamage_mult", "1", FCVAR_ARCHIVE,
 	"Global multiplier stacked on top of every per-vehicle prop-damage multiplier. 1 = unchanged." )
 
-local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "1", FCVAR_ARCHIVE,
+local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "0", FCVAR_ARCHIVE,
 	"Print every prop hit this layer sees, and the multiplier it resolved." )
 
 --------------------------------------------------------------------------------
@@ -89,14 +100,13 @@ local cv_debug = CreateConVar( "cwv_spd_propdamage_debug", "1", FCVAR_ARCHIVE,
 --------------------------------------------------------------------------------
 
 -- Final multiplier for a shot fired by `vehicle`. `override` (a number, usually
--- projectile.SPD_PropDamageMultiplier) replaces the per-vehicle value when given.
+-- projectile.CWV_PropDamageMultiplier) replaces the per-vehicle value when given.
 function CWV_PropDamage.Resolve( vehicle, override )
 	local base
 	if isnumber( override ) then
 		base = override
 	elseif IsValid( vehicle ) and isfunction( vehicle.GetSpawn_List ) then
-		local name = vehicle:GetSpawn_List()
-		base = CWV_PropDamage.Multipliers[ name ]
+		base = CWV_PropDamage.Multipliers[ vehicle:GetSpawn_List() ]
 	end
 	base = base or CWV_PropDamage.Default
 	return base * cv_mult:GetFloat()
@@ -105,7 +115,7 @@ end
 function CWV_PropDamage.SetVehicleMultiplier( ent, n )
 	if not IsValid( ent ) then return false end
 	if not isnumber( n ) then return false end
-	ent.SPD_PropDamageMultiplier = n
+	ent[ TAG ] = n
 	return true
 end
 
@@ -119,8 +129,6 @@ end
 
 local pendingHitScan   -- { m = number, f = frame } | nil
 local pendingProjTag   -- number | nil : multiplier to stamp on the next simfphys_tankprojectile
-
-local PROP_CLASS = "prop_physics"
 
 --------------------------------------------------------------------------------
 -- SPD hook: the only place damage is actually rescaled. SPD calls this for
@@ -140,16 +148,16 @@ hook.Add( "SPD_PreEntityTakeDamage", "CWV_SPD_PropDamage", function( propEnt, pr
 
 	if pendingHitScan and pendingHitScan.f == FrameNumber() then
 		mult, src = pendingHitScan.m, "hitscan"
-	elseif IsValid( inflictor ) and isnumber( inflictor.SPD_PropDamageMultiplier ) then
+	elseif IsValid( inflictor ) and isnumber( inflictor[ TAG ] ) then
 		-- shell tagged at creation, or a tagged missile / vehicle
-		mult, src = inflictor.SPD_PropDamageMultiplier, "inflictor"
+		mult, src = inflictor[ TAG ], "inflictor"
 	elseif IsValid( inflictor ) and inflictor:GetClass() == "simfphys_tankprojectile"
-		and IsValid( inflictor:GetOwner() ) and isnumber( inflictor:GetOwner().SPD_PropDamageMultiplier ) then
+		and IsValid( inflictor:GetOwner() ) and isnumber( inflictor:GetOwner()[ TAG ] ) then
 		-- shell we could not tag at creation: fall back to its owning vehicle
-		mult, src = inflictor:GetOwner().SPD_PropDamageMultiplier, "shell-owner"
-	elseif IsValid( attacker ) and isnumber( attacker.SPD_PropDamageMultiplier )
+		mult, src = inflictor:GetOwner()[ TAG ], "shell-owner"
+	elseif IsValid( attacker ) and isnumber( attacker[ TAG ] )
 		and dmg:IsDamageType( DMG_WEAPONISH ) then
-		mult, src = attacker.SPD_PropDamageMultiplier, "attacker"
+		mult, src = attacker[ TAG ], "attacker"
 	end
 
 	if cv_debug:GetBool() then
@@ -183,15 +191,14 @@ local myHitScan, myPhysProj -- identities of the wrappers we installed
 local function installDetours()
 	if not istable( simfphys ) then return end
 
-	-- FireHitScan: was reassigned by a pack file since we last wrapped it, so
-	-- wrap whatever is current (unless it is already our wrapper).
 	if isfunction( simfphys.FireHitScan ) and simfphys.FireHitScan ~= myHitScan then
 		local inner = simfphys.FireHitScan
 
 		myHitScan = function( data )
 			if istable( data ) and IsValid( data.attackingent ) then
-				local m = CWV_PropDamage.Resolve( data.attackingent, data.SPD_PropDamageMultiplier )
-				data.attackingent.SPD_PropDamageMultiplier = m
+				local m = CWV_PropDamage.Resolve( data.attackingent,
+					data.CWV_PropDamageMultiplier or data.SPD_PropDamageMultiplier )
+				data.attackingent[ TAG ] = m
 				pendingHitScan = { m = m, f = FrameNumber() }
 				local ok, err = pcall( inner, data )
 				pendingHitScan = nil
@@ -209,8 +216,9 @@ local function installDetours()
 
 		myPhysProj = function( data )
 			if istable( data ) and IsValid( data.attackingent ) then
-				local m = CWV_PropDamage.Resolve( data.attackingent, data.SPD_PropDamageMultiplier )
-				data.attackingent.SPD_PropDamageMultiplier = m
+				local m = CWV_PropDamage.Resolve( data.attackingent,
+					data.CWV_PropDamageMultiplier or data.SPD_PropDamageMultiplier )
+				data.attackingent[ TAG ] = m
 				pendingProjTag = m
 				local ok, err = pcall( inner, data )
 				pendingProjTag = nil
@@ -233,5 +241,5 @@ installDetours() -- autorefresh / hot reload
 hook.Add( "OnEntityCreated", "CWV_SPD_PropDamage_TagProjectile", function( ent )
 	if pendingProjTag == nil then return end
 	if ent:GetClass() ~= "simfphys_tankprojectile" then return end
-	ent.SPD_PropDamageMultiplier = pendingProjTag
+	ent[ TAG ] = pendingProjTag
 end )

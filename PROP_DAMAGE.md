@@ -56,11 +56,16 @@ In a weapon file under `lua/simfphys_weapons/`, set a field on the projectile
 table before the `simfphys.Fire*` call:
 
 ```lua
-projectile.SPD_PropDamageMultiplier = 0   -- this MG can't hurt props at all
+projectile.CWV_PropDamageMultiplier = 0   -- this MG can't hurt props at all
 simfphys.FireHitScan( projectile )
 ```
 
 When set it replaces the per-vehicle number for that one weapon.
+
+> The field is `CWV_PropDamageMultiplier`, **not** `SPD_PropDamageMultiplier`.
+> Simple Prop Damage's LVS compat layer also scales by any inflictor's
+> `SPD_PropDamageMultiplier`, so using that name makes the multiplier apply
+> twice (you'd see `damage × mult²`).
 
 ### Server-wide last word
 
