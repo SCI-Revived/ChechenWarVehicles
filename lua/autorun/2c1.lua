@@ -50,7 +50,7 @@ local V = {
 				end
 			end,
 		
-		MaxHealth =2500, -- You are a glass cannon.
+		MaxHealth =3000, -- You are a glass cannon.
 		
 		IsArmored = true,
 		
