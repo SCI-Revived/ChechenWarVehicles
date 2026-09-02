@@ -39,7 +39,8 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 3750
 		projectile.MuzzleVelocity = 70
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 1 -- You're artillery, you will do 28,125 damage per minute, but you are literally made of paper and can die easily.
+
 	simfphys.FirePhysProjectile( projectile )
 end
 
@@ -440,7 +441,7 @@ function simfphys.weapon:PrimaryAttack( vehicle, ply, shootOrigin, Attachment )
 	else
 		vehicle:EmitSound("t90ms_reload")
 		relouds=0
-		self:SetNextPrimaryFire( vehicle, CurTime() + 7)
+		self:SetNextPrimaryFire( vehicle, CurTime() + 8)
 	end
 end
 

@@ -17,10 +17,10 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 25
 		projectile.DeflectAng = 40
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
+		projectile.CWV_PropDamageMultiplier = 0.014 -- 1 prop damage per shot lol.
+	
 	
 	simfphys.FirePhysProjectile( projectile )
-	
-
 end
 
 function simfphys.weapon:ValidClasses()

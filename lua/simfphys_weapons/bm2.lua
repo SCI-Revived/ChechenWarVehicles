@@ -73,7 +73,8 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 50
 		projectile.DeflectAng = 40
 		projectile.BlastEffect = "simfphys_tankweapon_explosion_micro"
-	
+		projectile.CWV_PropDamageMultiplier = 0.02 -- 11 prop damage per shell, 1320 damage in 1 magazine.
+
 	simfphys.FirePhysProjectile( projectile )
 	
 

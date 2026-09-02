@@ -26,7 +26,8 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastDamage = 500
 		projectile.MuzzleVelocity = 60
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 0.3 -- 300 prop damage per rocket.
+
 	simfphys.FirePhysProjectile( projectile )
 end
 
