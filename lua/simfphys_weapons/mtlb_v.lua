@@ -40,7 +40,7 @@ local function mg_fire(ply,vehicle,shootOrigin,shootDirection)
 	vehicle:GetPhysicsObject():ApplyForceOffset( -shootDirection * 200000, shootOrigin )
 
 	-- If this is going to be used to barrage bases, it should have some spread.
-	local spread = 0.025   -- higher = wider cone (roughly a few degrees)
+	local spread = 0.03   -- higher = wider cone (roughly a few degrees)
 	shootDirection = (shootDirection + Vector(
 		math.Rand( -spread, spread ),
 		math.Rand( -spread, spread ),
