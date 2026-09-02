@@ -38,7 +38,8 @@ local function hmg_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.BlastRadius = 300
 		projectile.BlastDamage = 500
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-	
+		projectile.CWV_PropDamageMultiplier = 0.4 -- 1800 prop damage, 18,000 damage per minute.
+
 	simfphys.FirePhysProjectile( projectile )
 end
 

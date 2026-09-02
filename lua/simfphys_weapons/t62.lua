@@ -72,12 +72,12 @@ local function cannon_fire(ply,vehicle,shootOrigin,shootDirection)
 		projectile.attackingent = vehicle
 		projectile.Damage = 3500
 		projectile.Force = 6000
-		projectile.Size =5
+		projectile.Size = 5
 		projectile.DeflectAng = 10
 		projectile.BlastRadius = 300
 		projectile.BlastDamage = 500
 		projectile.BlastEffect = "simfphys_tankweapon_explosion"
-		projectile.CWV_PropDamageMultiplier = 0.3375 -- vs props: 1 = unchanged, 0 = none, 0.05 = 5%. See cwv_prop_damage.lua
+		projectile.CWV_PropDamageMultiplier = 0.3375 -- 1350 prop damage, 13,500 damage per minute.
 
 	simfphys.FirePhysProjectile( projectile )
 
